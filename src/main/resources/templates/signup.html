@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Signup page</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="my-card mt-3">
+
+						<div th:if="${session.message}"
+							th:classappend="${session.message.type}"
+							class="alert alert-primary" role="alert">
+							<p class="text-center" th:text="${session.message.content}"></p>
+							<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+						</div>
+
+
+						<h1 class="text-center">Signup</h1>
+
+						<form th:action="@{/do_register}" method="post"
+							th:object="${user}">
+
+							<!-- name  field	-->
+							<div class="form-group">
+								<label for="exampleInputEmail1">Full Name</label> 
+								<input
+									name="name" type="text" class="form-control" 
+									th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+									 id="name_field"
+									aria-describedby="emailHelp" placeholder="Enter name" required
+									th:value="${user.name}" />
+								<div class="invalid-feedback" 
+								th:each="e : ${#fields.errors('name')}" 
+								th:text="${e}">
+						        </div>
+
+							</div>
+
+							<!-- Email  field	-->
+							<div class="form-group">
+								<label for="exampleInputEmail1">Email</label> <input
+									name="email" type="email" class="form-control" id="email_field"
+									aria-describedby="emailHelp" placeholder="Enter email"
+									th:value="${user.email}" required />
+
+							</div>
+
+							<!-- password  field	-->
+							<div class="form-group">
+								<label for="exampleInputEmail1">Password</label> <input
+									name="password" type="password" class="form-control"
+									id="password_field" aria-describedby="emailHelp"
+									placeholder="Enter password"
+									th:value="${user.password}" required />
+
+							</div>
+
+							<!-- about  field	-->
+							<div class="form-group">
+								<label for="exampleInputEmail1">About You</label>
+								<textarea name="about" th:text="${user.about}"
+									placeholder="Enter something about yourself" row="5"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('about') ? 'is-invalid' : ''}" id="about_field">
+								</textarea>
+								<div class="invalid-feedback" 
+								th:each="e : ${#fields.errors('about')}" 
+								th:text="${e}">
+						        </div>
+							</div>
+
+							<div class="container text-center">
+								<button class="btn btn-primary">Submit</button>
+							</div>
+							
+							<div class="text-right"><a th:href="@{/signin}" class="text-info">
+							Already have a account? Signin Here!
+							</a>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

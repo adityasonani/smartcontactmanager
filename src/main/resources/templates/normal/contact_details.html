@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.thymeleaf.org"
+	th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>contact page</title>
+</head>
+<body>
+	<section>
+		<div class="card ml-3 mr-3" th:if="${contact}">
+			<div class="card-body">
+				<div th:if="${session.message}"
+					th:classappend="${session.message.type}"
+					class="alert alert-primary" role="alert">
+					<p class="text-center" th:text="${session.message.content}"></p>
+					<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+				</div>
+
+				<div class="container text-center">
+					<img style="height: 200px; width: 200px;" class="my-profile-pic"
+						th:src="@{'/images/'+${contact.imageUrl}}" alt="profile photo" />
+
+					<h3 th:text="${contact.name}" class="mt-3"></h3>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">#ID</th>
+									<th scope="col"><span th:text="'SCM'+${contact.cId}"></span></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">Email</th>
+									<td><span th:text="${contact.email}"></span></td>
+								</tr>
+
+								<tr>
+									<th scope="row">Phone</th>
+									<td><span th:text="${contact.phone}"></span></td>
+								</tr>
+
+								<tr>
+									<th scope="row">Work</th>
+									<td><span th:text="${contact.work}"></span></td>
+								</tr>
+
+								<tr>
+									<th scope="row">Nickname</th>
+									<td><span th:text="${contact.secondName}"></span></td>
+								</tr>
+
+							</tbody>
+						</table>
+
+					</div>
+
+					<div class="description mt-3">
+
+						<th:block th:utext="${contact.description}"></th:block>
+
+					</div>
+
+					<div class="mt-3">
+
+						<a th:href="@{'/user/delete/'+${contact.cId}}"
+							class="btn btn-danger btn-block">Delete</a>
+						<form method="post"
+							th:action="@{'/user/update-contact/'+${contact.cId}}">
+							<button type="submit" class="btn btn-primary btn-block mt-2">Update</button>
+							</td>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<h1 th:unless="${contact}" class="text-center">No Contact Found</h1>
+	</section>
+</body>
+</html>
