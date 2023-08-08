@@ -1,6 +1,6 @@
 console.log("This is script .js");
 
-let url = `http://localhost:8080/search/`;
+let url = `https://myscm.up.railway.app/search/`;
 const toggleSidebar=()=>{
     if ($(".sidebar").is(":visible")) {
         $(".sidebar").css("display", "none");
