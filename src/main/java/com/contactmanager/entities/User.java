@@ -23,10 +23,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "User")
-@Getter
-@Setter
-@AllArgsConstructor
-@Data
 public class User {
 
 	@Id

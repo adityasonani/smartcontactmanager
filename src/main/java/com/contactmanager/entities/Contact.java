@@ -20,10 +20,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "Contact")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
