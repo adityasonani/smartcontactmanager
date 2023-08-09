@@ -64,8 +64,7 @@ public class HomeController {
 			userRepo.save(user);
 
 			model.addAttribute("user", new User());
-			session.setAttribute("message", new Message("Successfully registered!", "alert-success"));
-
+			return "redirect:/signin";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("user", user);

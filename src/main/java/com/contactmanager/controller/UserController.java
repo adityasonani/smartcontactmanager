@@ -1,6 +1,7 @@
 package com.contactmanager.controller;
 
 import java.io.File;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -89,14 +89,27 @@ public class UserController {
 				String newFileName = timeStamp + file.getOriginalFilename();
 
 				contact.setImageUrl(newFileName);
+				
+				Path path = Paths.get("static/images/" + newFileName);
 
+				/**
+//				 * old way
 				File saveFile = new ClassPathResource("static/images").getFile();
 
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + newFileName);
-
 				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				**/
+				
+				// new way
+				try (InputStream inputStream = new ClassPathResource("static/images").getInputStream()) {
+				    Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+				    System.out.println("Image uploaded!");
+				} catch (Exception e) {
+				    // Handle the exception
+//				    e.printStackTrace();
+				    System.out.println("Error while uploading image file!");
+				    contact.setImageUrl("contact.png");
+				}
 
-				System.out.println("Image uploaded!");
 			}
 
 			contact.setUser(user);
@@ -217,15 +230,22 @@ public class UserController {
 				
 				String newFileName = timeStamp + file.getOriginalFilename();
 				
-				File saveFile = new ClassPathResource("static/images").getFile();
-
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + newFileName);
-
-				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				Path path = Paths.get("static/images/" + newFileName);
 				
 				contact.setImageUrl(newFileName);
+				
+				// new way
+				try (InputStream inputStream = new ClassPathResource("static/images").getInputStream()) {
+				    Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
 
-				System.out.println("Image updated!");
+					System.out.println("Image updated!");
+				} catch (Exception e) {
+				    // Handle the exception
+//				    e.printStackTrace();
+				    System.err.println("Error while updating image file!");
+				    contact.setImageUrl("contact.png");
+				}
+
 			}
 			User user = userRepo.getUserByUserName(principal.getName());
 			contact.setUser(user);

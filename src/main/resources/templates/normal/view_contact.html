@@ -58,7 +58,7 @@
 					</table>
 				</div>
 
-				<nav aria-label="Page navigation example">
+				<nav th:if="${totalPage>0}" aria-label="Page navigation example">
 					<ul class="pagination">
 						<li th:if="${currentPage!=0}" class="page-item"><a
 							class="page-link"
@@ -68,7 +68,7 @@
 							class="page-item"><a class="page-link"
 							th:href="@{'/user/view-contacts?page='+${i-1}}"><span
 								th:text="${i}"></span></a></li>
-						<li th:if="${currentPage+1!=totalPage}" class="page-item"><a
+						<li th:if="${currentPage+1<totalPage}" class="page-item"><a
 							class="page-link"
 							th:href="@{'/user/view-contacts?page='+${currentPage+1}}">Next</a></li>
 					</ul>
