@@ -1,6 +1,6 @@
 console.log("This is script .js");
 
-let url = `https://myscm.up.railway.app/search/`;
+let url = `https://smartcontactmanager-k15b.onrender.com/search/`;
 const toggleSidebar=()=>{
     if ($(".sidebar").is(":visible")) {
         $(".sidebar").css("display", "none");
