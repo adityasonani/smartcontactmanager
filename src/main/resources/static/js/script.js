@@ -20,6 +20,7 @@ const search=()=>{
     if (query=='') {
         $(".search-result").hide();
     } else {
+        url = window.location.hostname === "localhost" ? "http://localhost:8080/search/" : url;
         let nurl = url + query;
 
         fetch(nurl).then((res)=>{
